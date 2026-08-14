@@ -1,0 +1,28 @@
+{
+  "name": "nexa",
+  "version": "1.0.0",
+  "description": "Lead operating system. Capture -> score -> route -> sequence -> daily action list.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test --import tsx test/**/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/itsdaddio/Nexa"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.9.5",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/pg": "^8.21.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

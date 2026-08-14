@@ -96,4 +96,12 @@ CREATE TABLE IF NOT EXISTS sequences (
 CREATE TABLE IF NOT EXISTS sequence_enrollments (
   id           text PRIMARY KEY,
   workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
-  sequence_
+  sequence_id  text NOT NULL REFERENCES sequences(id) ON DELETE CASCADE,
+  lead_id      text NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+  status       text NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'paused', 'completed', 'cancelled')),
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (sequence_id, lead_id)
+);
+
+CREATE INDEX IF NOT EXISTS sequence_enrollments_lead_idx ON sequence_enrollments (lead_id, created_at DESC);
