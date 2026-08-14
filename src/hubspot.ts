@@ -68,8 +68,6 @@ export async function pushLeadToHubSpot(
     return { ok: false, error: "Missing HubSpot token" };
   }
 
-  leadToHubSpotProperties(lead);
-
   return {
     ok: true,
     contactId: `stub-${lead.id}`,

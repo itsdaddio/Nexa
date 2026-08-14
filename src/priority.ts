@@ -13,7 +13,10 @@ export function priorityLeads(leads: Lead[], limit = 5): Lead[] {
 
   const newestUnworked = openLeads
     .filter((lead) => !lead.worked)
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
+    .reduce<Lead | undefined>((newest, lead) => {
+      if (!newest) return lead;
+      return lead.createdAt.getTime() > newest.createdAt.getTime() ? lead : newest;
+    }, undefined);
 
   const prioritized = openLeads
     .filter((lead) => lead.score >= 40)
