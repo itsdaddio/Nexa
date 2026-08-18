@@ -3,6 +3,8 @@
  * Failures must not block lead capture — log as activity instead.
  */
 
+import type { Lead } from "./types.js";
+
 export interface HubSpotContactProperties {
   email: string;
   firstname?: string;
@@ -22,8 +24,8 @@ export interface HubSpotPushResult {
 }
 
 export function splitName(full: string): { firstname: string; lastname: string } {
-  const parts = full.trim().split(/\s+/);
-  if (parts.length === 1) return { firstname: parts[0], lastname: "" };
+  const parts = full.trim().split(/\s+/).filter(Boolean);
+  if (parts.length <= 1) return { firstname: parts[0] ?? "", lastname: "" };
   return {
     firstname: parts[0],
     lastname: parts.slice(1).join(" "),
@@ -55,4 +57,19 @@ export function leadToHubSpotProperties(lead: {
 }
 
 /**
- * Production: POST https://api.hubapi.com/crm/v3/objects/contacts
+ * Stub implementation for P0 foundation.
+ * Replace with real HubSpot API call in later milestones.
+ */
+export async function pushLeadToHubSpot(
+  lead: Pick<Lead, "id" | "name" | "email" | "phone" | "company" | "score" | "source" | "status">,
+  hubspotToken?: string,
+): Promise<HubSpotPushResult> {
+  if (!hubspotToken) {
+    return { ok: false, error: "Missing HubSpot token" };
+  }
+
+  return {
+    ok: true,
+    contactId: `stub-${lead.id}`,
+  };
+}

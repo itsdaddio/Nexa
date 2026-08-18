@@ -28,4 +28,28 @@ export function scoreLead(input: ScoreInput): number {
 
   switch (input.source) {
     case "utm":
-      score
+      score += SCORE_WEIGHTS.utm;
+      break;
+    case "referral":
+      score += SCORE_WEIGHTS.referral;
+      break;
+    case "agency":
+      score += SCORE_WEIGHTS.agency;
+      break;
+    case "content":
+      score += SCORE_WEIGHTS.content;
+      break;
+    case "direct":
+      break;
+  }
+
+  if (input.phone?.trim()) {
+    score += SCORE_WEIGHTS.phone;
+  }
+
+  if (input.company?.trim()) {
+    score += SCORE_WEIGHTS.company;
+  }
+
+  return Math.min(score, SCORE_WEIGHTS.cap);
+}
